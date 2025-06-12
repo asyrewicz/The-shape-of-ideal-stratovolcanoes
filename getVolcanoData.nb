@@ -1,0 +1,33 @@
+(* Define a function to extract elevation data for a given volcano *)
+getVolcanoData[nameOfVolcano_] := Module[
+    {coordinates, elevationData, elevationMatrix},
+
+    (* Get the geographic coordinates of the volcano *)
+    coordinates = EntityValue[Entity["Volcano", nameOfVolcano], "Coordinates"];
+    
+    (* Extract elevation data in a disk of 10-kilometer radius around the volcano *)
+    elevationData = GeoElevationData[
+        GeoDisk[coordinates, Quantity[10, "Kilometers"]], GeoZoomLevel -> 12
+    ];
+
+    (* Convert the elevation data to a plain numerical matrix *)
+    elevationMatrix = QuantityMagnitude[Normal[elevationData]];
+    elevationMatrix
+];
+
+(* Get a list of all stratovolcanoes *)
+volcanoList = EntityList[EntityClass["Volcano", {"VolcanoType","Stratovolcano"}]];
+
+(* Create a dictionary of elevation matrices indexed by volcano names *)
+volcanoData = Association[
+    Table[
+        With[
+            {id = volcanoList[[i, 2]], name = EntityValue[volcanoList[[i]], "Name"]},
+            name -> getVolcanoData[id]
+        ],
+        {i, 1, Length[volcanoList]}
+    ]
+]
+
+(* Export the elevation data for all stratovolcanoes to a JSON file *)
+Export["stratovolcanoes_all.json", volcanoData, "JSON"]
