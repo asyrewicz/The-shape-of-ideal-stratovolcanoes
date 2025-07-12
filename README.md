@@ -1,0 +1,5 @@
+**Bachelor's thesis in Physics.**
+
+This study investigates whether the characteristic shapes of stratovolcanoes can be reproduced using a simple, idealized model based on hydrodynamics and heat transfer. Motivated by the success of similar models in describing icicles and stalagmites, we formulate a differential model for volcanic growth under invariant conditions.
+
+To test the model, we compiled a dataset of elevation matrices for stratovolcanoes using publicly available topographical data. A data processing pipeline was developed to identify the most axisymmetric volcanoes through cross-sectional profile analysis. For these volcanoes, we computed average radial elevation profiles and compared them to numerical solutions of the model. The model contains one key dimensionless parameter—the Damköhler number—which determines the shape function, along with the radius and offset parameters. The model reproduces the general shape of real volcanoes with good agreement, suggesting that simple physical principles can capture key aspects of volcanic morphology.
